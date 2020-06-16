@@ -20,6 +20,7 @@ def tro(i):
             driver = webdriver.Chrome("chromedriver.exe",chrome_options=chrome_options)
             driver.get("https://youtube.com/c/rezondegrowtopia")
             driver.get(my_url)
+            time.sleep(7)
             driver.minimize_window()
 
 tp = ThreadPool(1000)
