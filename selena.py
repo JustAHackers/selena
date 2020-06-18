@@ -43,5 +43,5 @@ def tro(i):
 tp = ThreadPool(5000)
 tp.map(tri,pl)
 
-tp = ThreadPool(30)
+tp = ThreadPool(300)
 tp.map(fres,dl)
