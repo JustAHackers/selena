@@ -8,16 +8,29 @@ prolist = requests.get("https://api.proxyscrape.com/?request=getproxies&proxytyp
 prolist1 = requests.get("https://api.proxyscrape.com/?request=getproxies&proxytype=socks4&timeout=10000&country=all").text
 prolist2 = requests.get("https://api.proxyscrape.com/?request=getproxies&proxytype=socks5&timeout=10000&country=all").text
 dl = []
+for i in prolist.splitlines():
+    pl.append(i)
+
+for i in prolist1.splitlines():
+    pl.append(i)
+
+for i in prolist2.splitlines():
+    pl.append(i)
 my_url = "https://www.youtube.com/watch?v=Az-SIHZhzgc&list=PLZzMHROnvDL_qhylK7TOLgbRSc7ROwwAO&index=1"
 
 def tri(i):
    try:
     if requests.get(my_url,proxies={"https":"https://"+i},timeout=1).status_code == 200:
        print (i)
-       pl.append(i)
        tro(i)
    except:
     pass
+
+
+def fres(i):
+    i.refresh()
+    i.minimize_window()
+
 
 def tro(i):
             chrome_options = Options()
@@ -25,18 +38,10 @@ def tro(i):
             driver = webdriver.Chrome("chromedriver.exe",chrome_options=chrome_options)
             driver.get("https://youtube.com/c/rezondegrowtopia")
             driver.get(my_url)
-            if not "pause" in driver.page_source or "Play" in driver.page_source:
-               driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[1]/div/div/div/ytd-player/div/div/div[25]/div[2]/div[1]/button").click()
             dl.append(driver)
 
 tp = ThreadPool(5000)
-tp.map(tri,prolist.splitlines())
-tp.map(tri,prolist1.splitlines())
-tp.map(tri,prolist2.splitlines())
-for i in dl:
-    i.minimize_window()
+tp.map(tri,pl)
 
-while True:
-    for i in dl:
-        if "Play" in driver.page_source:
-            driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[1]/div/div/div/ytd-player/div/div/div[25]/div[2]/div[1]/button").click()
+tp = ThreadPool(30)
+tp.map(fres,dl)
