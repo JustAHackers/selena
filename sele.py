@@ -25,7 +25,8 @@ def tro(i):
             driver = webdriver.Chrome("chromedriver.exe",chrome_options=chrome_options)
             driver.get("https://youtube.com/c/rezondegrowtopia")
             driver.get(my_url)
-            time.sleep(7)
+            if not "pause" in driver.page_source or "Play" in driver.page_source:
+               driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[1]/div/div/div/ytd-player/div/div/div[25]/div[2]/div[1]/button").click()
             dl.append(driver)
 
 tp = ThreadPool(5000)
@@ -34,3 +35,8 @@ tp.map(tri,prolist1.splitlines())
 tp.map(tri,prolist2.splitlines())
 for i in dl:
     i.minimize_window()
+
+while True:
+    for i in dl:
+        if "Play" in driver.page_source:
+            driver.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[4]/div[1]/div/div[1]/div/div/div/ytd-player/div/div/div[25]/div[2]/div[1]/button").click()
