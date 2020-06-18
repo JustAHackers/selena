@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import requests
+import requests,time
 from multiprocessing.pool import ThreadPool
 pl = []
 prolist = requests.get("https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&country=all&ssl=all&anonymity=all").text
@@ -24,8 +24,7 @@ def tro(i):
             driver.get("https://youtube.com/c/rezondegrowtopia")
             driver.get(my_url)
             driver.minimize_window()
+            time.sleep(7)
 
 tp = ThreadPool(1500)
 tp.map(tri,prolist.splitlines())
-tp.map(tri,prolist1.splitlines())
-tp.map(tri,prolist2.splitlines())
