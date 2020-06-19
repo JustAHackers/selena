@@ -20,7 +20,7 @@ my_url = "https://www.youtube.com/watch?v=Az-SIHZhzgc&list=PLZzMHROnvDL_qhylK7TO
 
 def tri(i):
    try:
-    if requests.get(my_url,proxies={"https":"https://"+i},timeout=1).status_code == 200:
+    if requests.get(my_url,proxies={"https":"https://"+i},timeout=0.4).status_code == 200:
        print (i)
        tro(i)
    except:
@@ -45,3 +45,6 @@ tp.map(tri,pl)
 
 tp = ThreadPool(300)
 tp.map(fres,dl)
+
+
+print ("Job Done")
